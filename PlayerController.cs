@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float raycastDistance = 1.5f;
     [SerializeField] LayerMask groundMask;
 
+    const string HORIZONTAL = "Horizontal";
+    [SerializeField] float speed = 10;
+    float h;
 
     Rigidbody2D rb;
 
@@ -18,10 +21,14 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        h = Input.GetAxisRaw(HORIZONTAL);
+
         if (Input.GetButtonDown("Jump"))
         {
             Jump();
         }
+        Move();
+
 
     }
 
@@ -43,5 +50,10 @@ public class PlayerController : MonoBehaviour
         {
             return true;
         }
+    }
+
+    void Move()
+    {
+        rb.velocity = new Vector2(h * speed, rb.velocity.y);
     }
 }
