@@ -31,12 +31,15 @@ public class PlayerController : MonoBehaviour
     {
         h = Input.GetAxisRaw(HORIZONTAL);
 
-        if (Input.GetButtonDown("Jump"))
+        if (GameManager.instance.currentGameState == GameState.inGame)
         {
-            Jump();
+            if (Input.GetButtonDown("Jump"))
+            {
+                Jump();
+            }
+            Move();
+            RenderDirection();
         }
-        Move();
-        RenderDirection();
 
         anim.SetBool(IS_JUMPING, IsJumping());
     }
