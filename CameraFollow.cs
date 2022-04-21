@@ -11,18 +11,29 @@ public class CameraFollow : MonoBehaviour
 
     private void Update()
     {
-        CameraMove();
+        CameraMove(false);
     }
 
-    void CameraMove()
+    public void ResetCameraPosition()
+    {
+        CameraMove(true);
+    }
+
+    void CameraMove(bool reset)
     {
         Vector3 destination = new Vector3(target.position.x - offset.x, 
                                           target.position.y - offset.y, 
                                           offset.z);
-        
-        transform.position = Vector3.SmoothDamp(transform.position, 
-                                                destination, 
-                                                ref velocity, 
-                                                dampingTime);
+        if (reset)
+        {
+            transform.position = destination;
+        }
+        else
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, 
+                                                    destination, 
+                                                    ref velocity, 
+                                                    dampingTime);
+        }
     }
 }

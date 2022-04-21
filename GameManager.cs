@@ -15,10 +15,17 @@ public class GameManager : MonoBehaviour
 
     public GameState currentGameState = GameState.menu;
 
+    PlayerController player;
+
     private void Awake()
     {
         if (instance == null) instance = this;
         else Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     private void Update()
@@ -37,7 +44,7 @@ public class GameManager : MonoBehaviour
         }
         if (newGameState == GameState.inGame)
         {
-
+            player.RestartPosition();
         }
         if (newGameState == GameState.gameOver)
         {

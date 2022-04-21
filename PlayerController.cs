@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     const string IS_JUMPING = "IsJumping";
     const string IS_WALKING = "IsWalking";
 
+    Vector2 initialPosition;
+
     Rigidbody2D rb;
     Animator anim;
 
@@ -25,6 +27,23 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
 
         anim.SetBool(IS_ALIVE, true);
+
+        initialPosition = transform.position;
+    }
+
+    public void RestartPosition()
+    {
+        Invoke("InitialPosition", 0.3f);
+    }
+
+    void InitialPosition()
+    {
+        transform.position = initialPosition;
+        rb.velocity = Vector2.zero;
+        anim.SetBool(IS_ALIVE , true);
+
+        GameObject mainCamera = GameObject.Find("Main Camera");
+        mainCamera.GetComponent<CameraFollow>().ResetCameraPosition();
     }
 
     private void Update()
@@ -78,6 +97,7 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
+        GameManager.instance.GameOverState();
         anim.SetBool(IS_ALIVE, false);
         rb.velocity = Vector2.zero;
     }
