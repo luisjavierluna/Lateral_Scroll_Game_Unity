@@ -45,6 +45,9 @@ public class GameManager : MonoBehaviour
         if (newGameState == GameState.inGame)
         {
             player.RestartPosition();
+
+            LevelManager.instance.RemoveAllTheLevelBlocks();
+            LevelManager.instance.GenerateInitialBlocks();
         }
         if (newGameState == GameState.gameOver)
         {
