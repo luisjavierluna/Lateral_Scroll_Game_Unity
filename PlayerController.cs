@@ -18,6 +18,16 @@ public class PlayerController : MonoBehaviour
 
     Vector2 initialPosition;
 
+    [SerializeField] int healthPoints = INITIAL_HEALTH;
+    [SerializeField] int manaPoints = INITIAL_MANA;
+
+    const int INITIAL_HEALTH = 100;
+    const int MAX_HEALTH = 200;
+    const int MIN_HEALTH = 0;
+    const int INITIAL_MANA = 100;
+    const int MAX_MANA = 200;
+    const int MIN_MANA = 0;
+
     Rigidbody2D rb;
     Animator anim;
 
@@ -44,6 +54,9 @@ public class PlayerController : MonoBehaviour
 
         GameObject mainCamera = GameObject.Find("Main Camera");
         mainCamera.GetComponent<CameraFollow>().ResetCameraPosition();
+
+        healthPoints = INITIAL_HEALTH;
+        manaPoints = INITIAL_MANA;
     }
 
     private void Update()
@@ -100,5 +113,28 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.GameOverState();
         anim.SetBool(IS_ALIVE, false);
         rb.velocity = Vector2.zero;
+    }
+
+    public void HealthControl(int points)
+    {
+        healthPoints += points;
+        if (healthPoints > MAX_HEALTH)
+        {
+            healthPoints = MAX_HEALTH;
+        }
+
+        if (healthPoints <= MIN_HEALTH)
+        {
+            Die();
+        }
+    }
+
+    public void ManaControl(int points)
+    {
+        manaPoints += points;
+        if (manaPoints > MAX_MANA)
+        {
+            manaPoints = MAX_MANA;
+        }
     }
 }

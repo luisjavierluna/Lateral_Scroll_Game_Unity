@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 
     public GameState currentGameState = GameState.menu;
 
+    public int coinsCollected = 0;
+
     PlayerController player;
 
     private void Awake()
@@ -79,5 +81,10 @@ public class GameManager : MonoBehaviour
     public void GameOverState()
     {
         SetGameState(GameState.gameOver);
+    }
+
+    public void CollectCoin(CollectableItem collectable)
+    {
+        coinsCollected += collectable.value;
     }
 }
