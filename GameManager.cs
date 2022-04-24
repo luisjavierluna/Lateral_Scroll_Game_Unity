@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         player = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        MenuManager.instance.HideInGameCanvas();
+        MenuManager.instance.HideGameOverCanvas();
     }
 
     private void Update()
@@ -40,18 +43,24 @@ public class GameManager : MonoBehaviour
     {
         if (newGameState == GameState.menu)
         {
-
+            MenuManager.instance.ShowMenuCanvas();
         }
         if (newGameState == GameState.inGame)
         {
-            player.RestartPosition();
+            MenuManager.instance.ShowInGameCanvas();
+            MenuManager.instance.HideMenuCanvas();
+            MenuManager.instance.HideGameOverCanvas();
 
             LevelManager.instance.RemoveAllTheLevelBlocks();
             LevelManager.instance.GenerateInitialBlocks();
+            
+            player.RestartPosition();
         }
         if (newGameState == GameState.gameOver)
         {
-
+            MenuManager.instance.ShowGameOverCanvas();
+            MenuManager.instance.HideMenuCanvas();
+            MenuManager.instance.HideInGameCanvas();
         }
 
         currentGameState = newGameState;
