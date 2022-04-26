@@ -21,12 +21,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int healthPoints = INITIAL_HEALTH;
     [SerializeField] int manaPoints = INITIAL_MANA;
 
-    const int INITIAL_HEALTH = 100;
-    const int MAX_HEALTH = 200;
-    const int MIN_HEALTH = 0;
-    const int INITIAL_MANA = 100;
-    const int MAX_MANA = 200;
-    const int MIN_MANA = 0;
+    public const int INITIAL_HEALTH = 100;
+    public const int MAX_HEALTH = 200;
+    public const int MIN_HEALTH = 0;
+    public const int INITIAL_MANA = 100;
+    public const int MAX_MANA = 200;
+    public const int MIN_MANA = 0;
 
     Rigidbody2D rb;
     Animator anim;
@@ -136,5 +136,15 @@ public class PlayerController : MonoBehaviour
         {
             manaPoints = MAX_MANA;
         }
+    }
+
+    public int GetHealth()
+    {
+        return healthPoints;
+    }
+
+    public int GetMana()
+    {
+        return manaPoints;
     }
 }
