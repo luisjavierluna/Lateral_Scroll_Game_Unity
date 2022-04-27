@@ -113,6 +113,14 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.GameOverState();
         anim.SetBool(IS_ALIVE, false);
         rb.velocity = Vector2.zero;
+
+        float travelledDistance = GetTravelledDistance();
+        float previousMaxDistance = PlayerPrefs.GetFloat("maxscore", 0);
+
+        if (travelledDistance > previousMaxDistance)
+        {
+            PlayerPrefs.SetFloat("maxscore", travelledDistance);
+        }
     }
 
     public void HealthControl(int points)
@@ -146,5 +154,10 @@ public class PlayerController : MonoBehaviour
     public int GetMana()
     {
         return manaPoints;
+    }
+
+    public float GetTravelledDistance()
+    {
+        return transform.position.x - initialPosition.x;
     }
 }
