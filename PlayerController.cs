@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
     public const int MAX_MANA = 200;
     public const int MIN_MANA = 0;
 
+    const int SUPERJUMP_COST = 40;
+    const float SUPERJUMP_FORCE = 1.5f;
+
     Rigidbody2D rb;
     Animator anim;
 
@@ -65,10 +68,15 @@ public class PlayerController : MonoBehaviour
 
         if (GameManager.instance.currentGameState == GameState.inGame)
         {
+            if (Input.GetButtonDown("Superjump"))
+            {
+                Jump(true);
+            }
             if (Input.GetButtonDown("Jump"))
             {
-                Jump();
+                Jump(false);
             }
+
             Move();
             RenderDirection();
         }
@@ -76,11 +84,25 @@ public class PlayerController : MonoBehaviour
         anim.SetBool(IS_JUMPING, IsJumping());
     }
 
-    void Jump()
+    void Jump(bool superjump)
     {
+        float jumpForceFactor = jumpForce;
+
         if (!IsJumping())
         {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            if (superjump)
+            {
+                if (manaPoints >= SUPERJUMP_COST)
+                {
+                    manaPoints -= SUPERJUMP_COST;
+                    jumpForceFactor *= SUPERJUMP_FORCE;
+                }
+                rb.AddForce(Vector2.up * jumpForceFactor, ForceMode2D.Impulse);
+            }
+            else
+            {
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            }
         }
     }
 
