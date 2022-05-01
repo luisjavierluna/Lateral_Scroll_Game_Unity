@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
         Vector3 spawnPoint;
         if (currentLevelBlocks.Count == 0)
         {
-            block = Instantiate(allTheLevelBlocks[0]);
+            block = Instantiate(allTheLevelBlocks[1]);
             spawnPoint = levelStartPoint.position;
         }
         else
